@@ -13,6 +13,7 @@ Options:
     -f --format STRING  Format string. [default: {time} {requests}]
     -o --outfile FILE   Output file.
     -d --duration TIME  Duration of generated traffic (in days) [default: 1]
+    -H --handler NAME   Name of handler class.
 '''
 
 from docopt import docopt
@@ -55,10 +56,21 @@ if __name__ == '__main__':
 
     arg_list = map(get_num, args['<params>'])
     outfile = open(args['--outfile'], 'w') if args['--outfile'] else sys.stdout
+
+    if args['--handler']:
+        components = args['--handler'].split('.')
+        handler = __import__('.'.join(components[:-1]))
+        for comp in components[1:]:
+            handler = getattr(handler, comp)
+    else:
+        handler = None
+
+
     options = {
             'duration': int(args['--duration']),
             'outfile': outfile,
-            'format_str': args['--format']
+            'format_str': args['--format'],
+            'handler_cls': handler
             }
 
     generators.generate(generator, arg_list, **options)
