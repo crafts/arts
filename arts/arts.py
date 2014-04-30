@@ -23,13 +23,16 @@ import inspect
 import sys
 
 ID_STR = 'generate_'
-generator_list = [gen[len(ID_STR):] for gen in dir(generators) if ID_STR in gen]
+generator_list = [gen[len(ID_STR):]
+                  for gen in dir(generators) if ID_STR in gen]
+
 
 def get_generator(name):
     if name in generator_list:
         return getattr(generators, ID_STR + name)
     else:
         raise NameError()
+
 
 def get_num(value):
     try:
@@ -39,6 +42,7 @@ def get_num(value):
             return float(value)
         except ValueError:
             return value
+
 
 if __name__ == '__main__':
     args = docopt(__doc__, version='Arts 0.1')
@@ -65,12 +69,11 @@ if __name__ == '__main__':
     else:
         handler = None
 
-
     options = {
-            'duration': int(args['--duration']),
-            'outfile': outfile,
-            'format_str': args['--format'],
-            'handler_cls': handler
-            }
+        'duration': int(args['--duration']),
+        'outfile': outfile,
+        'format_str': args['--format'],
+        'handler_cls': handler
+        }
 
     generators.generate(generator, arg_list, **options)

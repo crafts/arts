@@ -3,8 +3,9 @@ import sys
 
 MINUTES_PER_DAY = 1440
 
+
 def generate(generator_func, generator_args, duration=1, outfile=sys.stdout,
-        format_str='{time} {requests}', handler_cls=None):
+             format_str='{time} {requests}', handler_cls=None):
 
     if handler_cls:
         handler = handler_cls()
@@ -20,10 +21,11 @@ def generate(generator_func, generator_args, duration=1, outfile=sys.stdout,
     if handler:
         handler.done()
 
+
 def generate_sin(time, amplitude, frequency, offset):
     '''
     Generate input traffic based on a sin wave.
-    
+
     Usage: sin <amplitude> <frequency> <offset>
     '''
 

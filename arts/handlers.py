@@ -2,12 +2,14 @@ from couchdb import Server
 from datetime import datetime, timedelta
 from crafts.common.metrics import Metric, MetricCollection
 
+
 class Handler(object):
     def handle(self, time, value):
         raise NotImplementedError()
 
     def done(self):
         pass
+
 
 class CraftsHandler(Handler):
     def __init__(self):
