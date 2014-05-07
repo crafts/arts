@@ -13,12 +13,12 @@ class Handler(object):
 
 class CraftsHandler(Handler):
     def __init__(self):
-        self.collection = MetricCollection(Server()['crafts'])
+        self.collection = MetricCollection(Server()['crafts'], 'arts')
         self.start_time = datetime.utcnow()
 
     def handle(self, time, value):
         timestamp = self.start_time + timedelta(minutes=time)
-        m = Metric(timestamp, 'arts', 'arts-1', {'requests': value})
+        m = Metric(timestamp, 'arts-1', {'requests': value})
         self.collection.add(m)
 
     def done(self):
