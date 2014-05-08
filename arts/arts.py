@@ -5,6 +5,7 @@ Arts: Request-based traffic generator
 
 Usage:
     arts help <generator>
+    arts load <files>... [options]
     arts <generator> [<params>...] [options]
 
 Options:
@@ -63,17 +64,29 @@ if __name__ == '__main__':
 
     if args['--handler']:
         components = args['--handler'].split('.')
-        handler = __import__('.'.join(components[:-1]))
+        handler_cls = __import__('.'.join(components[:-1]))
         for comp in components[1:]:
-            handler = getattr(handler, comp)
+            handler_cls = getattr(handler_cls, comp)
     else:
-        handler = None
+        handler_cls = None
 
-    options = {
-        'duration': int(args['--duration']),
-        'outfile': outfile,
-        'format_str': args['--format'],
-        'handler_cls': handler
-        }
+    if args['<generator>']:
+        options = {
+            'duration': int(args['--duration']),
+            'outfile': outfile,
+            'format_str': args['--format'],
+            'handler_cls': handler_cls
+            }
 
-    generators.generate(generator, arg_list, **options)
+        generators.generate(generator, arg_list, **options)
+    elif args['load']:
+        handler = handler_cls()
+        for filename in args['<files>']:
+            infile = open(filename)
+
+            for line in infile:
+                (time, requests) = line.split()
+                handler.handle(int(time), int(requests))
+
+            infile.close()
+        handler.done()
