@@ -12,8 +12,13 @@ class Handler(object):
 
 
 class CraftsHandler(Handler):
-    def __init__(self):
-        self.collection = MetricCollection(Server()['crafts'], 'arts')
+    def __init__(self, url=None, db='crafts'):
+        if url is None:
+            s = Server()
+        else:
+            s = Server(url)
+
+        self.collection = MetricCollection(s['crafts'], 'arts')
 
     def handle(self, time, value):
         m = Metric(datetime.utcfromtimestamp(time), 'arts-1', {'requests': value})
@@ -21,3 +26,14 @@ class CraftsHandler(Handler):
 
     def done(self):
         self.collection.save()
+
+
+class FileHandler(Handler):
+    def __init__(self, filename):
+        self.outfile = open(filename, 'w')
+
+    def handle(self, time, value):
+        self.outfile.write("{}\t{}".format(time, value))
+
+    def done(self):
+        self.outfile.close()
