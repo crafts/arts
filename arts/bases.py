@@ -1,9 +1,12 @@
-def file(filename):
+from glob import glob
+
+def file(filepath):
     data = []
-    with open(filename) as infile:
-        for line in infile:
-            time, value = line.split()
-            data.append((time, value))
+    for filename in glob(filepath):
+        with open(filename) as infile:
+            for line in infile:
+                time, value = line.split()
+                data.append((int(time), int(value)))
 
     return data
 
