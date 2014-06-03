@@ -33,7 +33,7 @@ class FileHandler(Handler):
         self.outfile = open(filename, 'w')
 
     def handle(self, time, value):
-        self.outfile.write("{}\t{}".format(time, value))
+        self.outfile.write("{}\t{}\n".format(time, value))
 
     def done(self):
         self.outfile.close()
