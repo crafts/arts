@@ -1,4 +1,4 @@
-def base_file(filename):
+def file(filename):
     data = []
     with open(filename) as infile:
         for line in infile:
@@ -7,7 +7,7 @@ def base_file(filename):
 
     return data
 
-def base_value(tnot, duration, interval, value):
+def value(tnot, duration, interval, value):
     data = []
     for time in xrange(0, duration, interval):
         data.append((tnot + time, value))

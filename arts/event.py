@@ -1,11 +1,11 @@
-def event_outage(data, start, end):
+def outage(data, start, end):
     for idx, (time, value) in enumerate(data):
         if time >= start and time <= end:
             data[idx] = (time, 0)
 
     return data
 
-def event_spike(data, start, end, peak):
+def spike(data, start, end, peak):
     mid = (start + end) / 2
     tail_size = mid - start
     for idx, (time, value) in enumerate(data):
