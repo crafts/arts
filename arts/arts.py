@@ -58,5 +58,8 @@ def arts(conf_file):
 
         run_handler(data, handler_type, handler_args)
 
-if __name__ == '__main__':
+def main():
     arts(sys.argv[1])
+
+if __name__ == '__main__':
+    main()
