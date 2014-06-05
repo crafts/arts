@@ -25,6 +25,10 @@ def run_handler(data, name, args):
 
     handler.done()
 
+def load(filepath):
+    data = build_base("file", {"filepath": filepath})
+    run_handler(data, "CraftsHandler", {})
+
 def arts(conf_file):
     try:
         with open(conf_file) as infile:
@@ -59,7 +63,10 @@ def arts(conf_file):
         run_handler(data, handler_type, handler_args)
 
 def main():
-    arts(sys.argv[1])
+    if sys.argv[1] != "load":
+        arts(sys.argv[1])
+    else:
+        load(sys.argv[2])
 
 if __name__ == '__main__':
     main()
