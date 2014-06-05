@@ -25,11 +25,8 @@ def spike(data, start, end, peak):
     start = _convert_time(start)
     end = _convert_time(end)
 
-    mid = (start + end) / 2
-    tail_size = mid - start
     for idx, (time, value) in enumerate(data):
         if time >= start and time <= end:
-            magnitude = 1 + ((1 - (abs(time - mid) / tail_size)) * (peak - 1))
-            data[idx] = (time, value * magnitude)
+            data[idx] = (time, value * peak)
 
     return data
