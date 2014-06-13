@@ -10,8 +10,8 @@ def linear(data, slope):
 
 def sinusoid(data, amplitude, frequency, offset):
     for idx, (time, value) in enumerate(data):
-        multiplier = amplitude * math.sin(idx * math.pi * 2 * frequency) + 1
-        data[idx] = (time, value * multiplier)
+        modifier = amplitude * math.sin((time + offset) * math.pi * 2 * (1 / float(frequency)))
+        data[idx] = (time, value + modifier)
 
     return data
 
