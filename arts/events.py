@@ -1,3 +1,4 @@
+import calendar
 import time
 
 
@@ -5,7 +6,7 @@ TIME_FMT_STR = "%Y-%m-%dT%H:%M:%S"
 
 def _convert_time(time_val):
     if type(time_val) is unicode:
-        return int(time.mktime(time.strptime(time_val, TIME_FMT_STR)))
+        return int(calendar.timegm(time.strptime(time_val, TIME_FMT_STR)))
     elif type(time_val) is int:
         return time_val
     else:
