@@ -10,6 +10,10 @@ try:
 except ImportError:
     print("WARNING: missing crafts import")
 
+try:
+    from numpy.random import randn
+except ImportError:
+    print("WARNING: missing numpy import")
 
 class Handler(object):
     def handle(self, time, value):
@@ -42,6 +46,18 @@ class FileHandler(Handler):
 
     def handle(self, time, value):
         self.outfile.write("{}\t{}\n".format(time, value))
+
+    def done(self):
+        self.outfile.close()
+
+class LoadHandler(Handler):
+    def __init__(self, filename, mean, stdDev):
+        self.outfile = open(filename, 'w')
+        self.mean = mean
+        self.stdDev = stdDev
+
+    def handle(self, time, value):
+        self.outfile.write("{}\t{}\n".format(time, value * self.mean + self.stdDev * sum(randn(value))))
 
     def done(self):
         self.outfile.close()
