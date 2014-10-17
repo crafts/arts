@@ -1,6 +1,14 @@
-from couchdb import Server
 from datetime import datetime, timedelta
-from crafts.common.metrics import Metric, MetricCollection
+
+try:
+    from couchdb import Server
+except ImportError:
+    print("WARNING: missing couchdb import")
+
+try:
+    from crafts.common.metrics import Metric, MetricCollection
+except ImportError:
+    print("WARNING: missing crafts import")
 
 
 class Handler(object):
